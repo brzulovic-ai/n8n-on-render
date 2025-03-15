@@ -1,7 +1,7 @@
-# Use a compatible base image
+# Use Debian as the base image
 FROM debian:bullseye-slim
 
-# Install required dependencies for Puppeteer
+# Install required system dependencies
 RUN apt-get update && apt-get install -y \
   chromium \
   fonts-liberation \
@@ -29,8 +29,14 @@ RUN apt-get update && apt-get install -y \
   gconf-service \
   lsb-release \
   wget \
+  curl \
   xdg-utils \
   && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g npm
 
 # Install Puppeteer for n8n
 RUN npm install puppeteer
