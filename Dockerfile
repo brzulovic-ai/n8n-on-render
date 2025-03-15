@@ -1,12 +1,11 @@
-# Use Node.js as the base image (includes npm)
-FROM node:18-bullseye
+# Use the official n8n image
+FROM n8nio/n8n:latest
 
-# Set working directory
+# Set the working directory
 WORKDIR /usr/src/app
 
-# Install dependencies required for Puppeteer
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+# Install dependencies
+RUN apt-get update && apt-get install -y \
     chromium \
     fonts-liberation \
     libappindicator3-1 \
@@ -30,18 +29,22 @@ RUN apt-get update && \
     libxss1 \
     libxtst6 \
     ca-certificates \
+    fonts-liberation \
+    gconf-service \
+    lsb-release \
     wget \
-    curl \
-    xdg-utils && \
-    rm -rf /var/lib/apt/lists/*
+    xdg-utils \
+    curl && rm -rf /var/lib/apt/lists/*
 
-# Install Puppeteer globally
-RUN npm install -g puppeteer
+# Install Puppeteer properly
+RUN npm install puppeteer
 
 # Set environment variables
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+ENV N8N_HOST=0.0.0.0
+ENV N8N_PORT=5678
+ENV GENERIC_TIMEZONE=UTC
 
-# Expose port for n8n
+# Expose port 5678
 EXPOSE 5678
 
 # Start n8n
