@@ -34,7 +34,7 @@ RUN /usr/bin/apt-get update && /usr/bin/apt-get install -y \
     lsb-release \
     wget \
     xdg-utils \
-    curl && rm -rf /var/lib/apt/lists/*
+    curl && /usr/bin/rm -rf /var/lib/apt/lists/*
 
 # Install Puppeteer properly
 RUN npm install puppeteer
