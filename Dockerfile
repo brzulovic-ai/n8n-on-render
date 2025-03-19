@@ -5,7 +5,7 @@ FROM n8nio/n8n:latest
 WORKDIR /usr/src/app
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN /usr/bin/apt-get update && /usr/bin/apt-get install -y \
     chromium \
     fonts-liberation \
     libappindicator3-1 \
